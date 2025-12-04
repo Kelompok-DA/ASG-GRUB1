@@ -6,7 +6,6 @@
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.println("=== SISTEM MANAJEMEN PERPUSTAKAAN ===");
         System.out.println("Demonstrasi Konsep OOP: Inheritance & Polymorphism\n");
         
         // Buat instance perpustakaan
