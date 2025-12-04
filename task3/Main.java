@@ -176,9 +176,9 @@ public class Main {
         
         boolean success = perpustakaan.borrowBook(title, currentUserId);
         if (success) {
-            System.out.println("🎉 Selamat! Anda berhasil meminjam buku.");
+            System.out.println("  Selamat! Anda berhasil meminjam buku.");
         } else {
-            System.out.println("😞 Maaf, peminjaman buku gagal.");
+            System.out.println("  Maaf, peminjaman buku gagal.");
         }
     }
     
@@ -201,9 +201,9 @@ public class Main {
         
         boolean success = perpustakaan.returnBook(title, currentUserId);
         if (success) {
-            System.out.println("🎉 Terima kasih! Buku berhasil dikembalikan.");
+            System.out.println("  Terima kasih! Buku berhasil dikembalikan.");
         } else {
-            System.out.println("😞 Maaf, pengembalian buku gagal.");
+            System.out.println("  Maaf, pengembalian buku gagal.");
         }
     }
     
