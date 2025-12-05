@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Kelas Admin - kelas turunan dari User
  * Mendemonstrasikan inheritance dan polimorfisme
@@ -13,25 +15,21 @@ class Admin extends User {
     // Polimorfisme - mengganti metode abstrak dari kelas induk
     @Override
     public void showMenu() {
-        System.out.println("=== Menu Admin ===");
-        System.out.println("1. Tambah Buku");
-        System.out.println("2. Hapus Buku");
-        System.out.println("3. Lihat Semua Buku");
-        System.out.println("4. Lihat Statistik Admin");
-        System.out.println("Books added by this admin: " + booksAdded);
+        System.out.println("╔════════════════════════════════════════════════════╗");
+        System.out.println("║            SISTEM PENGELOLAAN DATA BUKU           ║");
+        System.out.println("║                  MENU ADMIN                       ║");
+        System.out.println("╠════════════════════════════════════════════════════╣");
+        System.out.println("║ User: " + String.format("%-20s", getName()) + " Role: " + String.format("%-12s", getUserRole()) + " ║");
+        System.out.println("╠════════════════════════════════════════════════════╣");
+        System.out.println("║ 1. Lihat Semua Buku                               ║");
+        System.out.println("║ 2. Tambah Buku                                    ║");
+        System.out.println("║ 3. Hapus Buku                                     ║");
+        System.out.println("║ 4. Cari Buku                                      ║");
+        System.out.println("║ 5. Lihat Laporan Perpustakaan                     ║");
+        System.out.println("║ 6. Keluar                                          ║");
+        System.out.println("╚════════════════════════════════════════════════════╝");
     }
 
-    // Polimorfisme - mengganti metode abstrak dengan implementasi spesifik
-    @Override
-    public void interactWithSystem(Library library) {
-        System.out.println(name + " (Admin) memiliki akses penuh untuk mengelola perpustakaan.");
-        System.out.println("Admin dapat menambah, menghapus, dan melihat semua buku.");
-        
-        // Mendemonstrasikan kemampuan admin
-        System.out.println("Demonstrasi kemampuan admin:");
-        addBook(library, new Book("Java Programming", "Oracle"));
-        viewAllBooks(library);
-    }
 
     // Metode khusus admin
     public void addBook(Library library, Book book) {
@@ -40,11 +38,6 @@ class Admin extends User {
         System.out.println("Total buku yang ditambahkan admin ini: " + booksAdded);
     }
 
-    public void removeBook(Library library, String title) {
-        // Untuk task3, admin tidak bisa hapus buku (fokus pada pengelolaan data)
-        System.out.println("Admin " + name + " - fitur hapus tidak tersedia di task3");
-        System.out.println("Task3 fokus pada pengelolaan data: tampil, pinjam, kembalikan");
-    }
     
     public void viewAllBooks(Library library) {
         System.out.println("Admin " + name + " melihat semua buku di perpustakaan:");
@@ -55,5 +48,79 @@ class Admin extends User {
     public void generateReport(Library library) {
         System.out.println("=== Laporan Perpustakaan oleh Admin " + name + " ===");
         library.displayLibraryStatistics();
+    }
+
+    /**
+     * Mengembalikan total opsi menu untuk admin
+     * @return
+     */
+    @Override
+    public int getTotalMenuOptions() {
+        return 5;
+    }
+
+    /**
+     * Mengembalikan peran user sebagai ADMIN
+     * @return
+     */
+    @Override
+    public UserRole getUserRole() {
+        return UserRole.ADMIN;
+    }
+
+    /**
+     * Polimorfisme - implementasi metode abstrak untuk menangani opsi menu admin
+     * Melihat semua buku dan statusnya
+     * @param library
+     * @param scanner
+     */
+    @Override
+    public void handleMenuOption1(Library library, Scanner scanner) {
+        System.out.println("=== MENU 1: LIHAT SEMUA BUKU (ADMIN) ===");
+        this.viewAllBooks(library);
+    }
+
+    /**
+     * Polimorfisme - implementasi metode abstrak untuk menangani opsi menu admin
+     * Menambahkan buku baru
+     * @param library
+     * @param scanner
+     */
+    @Override
+    public void handleMenuOption2(Library library, Scanner scanner) {
+        System.out.println("=== MENU 2: TAMBAH BUKU (ADMIN) ===");
+        System.out.print("Masukkan judul buku: ");
+        String title = scanner.nextLine().trim();
+        if (title.isEmpty()) {
+            System.out.println("❌ Judul buku tidak boleh kosong!");
+            return;
+        }
+        System.out.print("Masukkan nama pengarang: ");
+        String author = scanner.nextLine().trim();
+        if (author.isEmpty()) {
+            System.out.println("❌ Nama pengarang tidak boleh kosong!");
+            return;
+        }
+        Book newBook = new Book(title, author);
+        this.addBook(library, newBook);
+    }
+
+    /**
+     * Polimorfisme - implementasi metode abstrak untuk menangani opsi menu admin
+     * Menghapus buku berdasarkan judul
+     * @param library
+     * @param scanner
+     */
+    @Override
+    public void handleMenuOption3(Library library, Scanner scanner) {
+        System.out.println("=== MENU 3: HAPUS BUKU (ADMIN) ===");
+        System.out.print("Masukkan judul buku: ");
+        String title = scanner.nextLine().trim();
+        if (title.isEmpty()) {
+            System.out.println("❌ Judul buku tidak boleh kosong!");
+            return;
+        }
+
+        library.removeBookByTitle(title);
     }
 }

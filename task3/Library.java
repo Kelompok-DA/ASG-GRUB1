@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Kelas Library untuk pengelolaan data buku dengan array
  * Task 3: Pengelolaan Data Buku (Bobot 30%)
@@ -38,6 +40,25 @@ class Library {
             System.out.println("✗ Kapasitas array penuh! Tidak dapat menambah buku.");
             return false;
         }
+    }
+
+    public void removeBookByTitle(String title) {
+        for (int i = 0; i < bookCount; i++) {
+            if (books[i].getTitle().equalsIgnoreCase(title)) {
+
+                // geser array ke kiri
+                for (int j = i; j < bookCount - 1; j++) {
+                    books[j] = books[j + 1];
+                }
+
+                books[bookCount - 1] = null;
+                bookCount--;
+
+                System.out.println("Buku \"" + title + "\" berhasil dihapus.");
+                return;
+            }
+        }
+        System.out.println("Buku \"" + title + "\" tidak ditemukan.");
     }
     
     /**
@@ -238,15 +259,27 @@ class Library {
     }
     
     /**
-     * Mencari buku berdasarkan judul (untuk keperluan internal)
+     * Mencari buku berdasarkan judul dalam array
      */
-    public Book findBookByTitle(String title) {
+    public void findBookByTitle(Scanner scanner) {
+        System.out.print("Masukkan judul buku yang dicari: ");
+        String title = scanner.nextLine().trim();
+        if (title.isEmpty()) {
+            System.out.println("❌ Judul buku tidak boleh kosong!");
+        }
         for (int i = 0; i < bookCount; i++) {
             if (books[i].getTitle().equalsIgnoreCase(title)) {
-                return books[i];
+                System.out.println("✓ Buku ditemukan:");
+                System.out.println("Buku      : " + books[i].getTitle());
+                System.out.println("Pengarang : " + books[i].getAuthor());
+                System.out.println("Status    : " +
+                        (books[i].isAvailable() ?
+                                "Tersedia" :
+                                "Dipinjam oleh " + books[i].getBorrowedBy())
+                );
+                return;
             }
         }
-        return null;
     }
     
     // Getter methods
