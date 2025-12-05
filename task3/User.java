@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 /**
  * Kelas induk abstrak yang merepresentasikan User dalam sistem perpustakaan
  * Mendemonstrasikan inheritance - berfungsi sebagai base class untuk Admin dan Member
@@ -37,14 +39,9 @@ abstract class User {
 
     // Metode abstrak - harus diimplementasikan oleh kelas turunan (polimorfisme)
     public abstract void showMenu();
-    public abstract void interactWithSystem(Library library);
-    
-    // Pola template method - struktur umum, implementasi spesifik di kelas turunan
-    public final void performUserAction(Library library) {
-        System.out.println("\n=== " + userType + " Session Started ===");
-        displayUserInfo();
-        showMenu();
-        interactWithSystem(library);
-        System.out.println("=== " + userType + " Session Ended ===\n");
-    }
+    public abstract void handleMenuOption1(Library library, Scanner scanner);
+    public abstract void handleMenuOption2(Library library, Scanner scanner);
+    public abstract void handleMenuOption3(Library library, Scanner scanner);
+    public abstract int getTotalMenuOptions();
+    public abstract UserRole getUserRole();
 }

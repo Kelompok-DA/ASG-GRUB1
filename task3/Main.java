@@ -15,6 +15,7 @@ public class Main {
     private static Scanner scanner;
     private static String currentUserId = "";
     private static String currentUserName = "";
+    private static User currentUser = null;
     
     public static void main(String[] args) {
         System.out.println("=======================================================");
@@ -37,36 +38,79 @@ public class Main {
      */
     private static void initializeSystem() {
         scanner = new Scanner(System.in);
-        perpustakaan = new Library(15, "Perpustakaan Digital ITB");
+        perpustakaan = new Library(15, "Perpustakaan Digital BINUS");
         
         System.out.println("=== INISIALISASI SISTEM ===");
         initializeBooksArray();
         System.out.println("✓ Sistem berhasil diinisialisasi!\n");
     }
-    
+
     /**
      * Login user ke dalam sistem
      */
     private static void loginUser() {
         System.out.println("=== LOGIN PENGGUNA ===");
+
+        // pilih peran user
+        UserRole selectedRole = selectRole();
+
+        // get ID dan nama user
         System.out.print("Masukkan ID Pengguna: ");
         currentUserId = scanner.nextLine().trim();
-        
         if (currentUserId.isEmpty()) {
-            currentUserId = "USER001"; // Default user
+            currentUserId = "USER001";
         }
-        
+
         System.out.print("Masukkan Nama Anda: ");
         currentUserName = scanner.nextLine().trim();
-        
         if (currentUserName.isEmpty()) {
-            currentUserName = "Pengguna"; // Default name
+            currentUserName = "Pengguna";
         }
-        
+
+        // membuat object user sesuai peran setelah data diinput
+        createUserByRole(selectedRole);
+
         System.out.println("✓ Login berhasil!");
         System.out.println("Selamat datang, " + currentUserName + " (ID: " + currentUserId + ")\n");
+
+        currentUser.showMenu();
     }
-    
+
+    /**
+     * Memilih peran user: Admin atau Member
+     */
+    private static UserRole selectRole() {
+        System.out.println("Pilih peran Anda:");
+        System.out.println("1. Admin");
+        System.out.println("2. Member");
+        System.out.print("Masukkan pilihan (1-2): ");
+        String choice = scanner.nextLine().trim();
+
+        switch (choice) {
+            case "1":
+                System.out.println("Anda login sebagai Admin...\n");
+                return UserRole.ADMIN;
+            case "2":
+                System.out.println("Anda login sebagai Member...\n");
+                return UserRole.MEMBER;
+            default:
+                System.out.println("Pilihan tidak valid. Menggunakan peran Member sebagai default.\n");
+                return UserRole.MEMBER;
+        }
+    }
+
+    /**
+     * Membuat objek user berdasarkan peran yang dipilih
+     * @param role
+     */
+    private static void createUserByRole(UserRole role) {
+        if (role == UserRole.ADMIN) {
+            currentUser = new Admin(currentUserId, currentUserName);
+        } else {
+            currentUser = new Member(currentUserId, currentUserName);
+        }
+    }
+
     /**
      * Loop menu utama sistem - berjalan terus menerus
      */
@@ -74,34 +118,42 @@ public class Main {
         boolean running = true;
         
         while (running) {
-            displayMainMenu();
-            
-            System.out.print("Pilih menu (1-6): ");
+            //displayMainMenu();
+            int totalOptions = currentUser.getTotalMenuOptions() + 1; // +1 untuk opsi keluar
+            System.out.print("Pilih menu (1-" + totalOptions + "): ");
+
             String choice = scanner.nextLine().trim();
             
             System.out.println(); // Line break
             
             switch (choice) {
                 case "1":
-                    handleDisplayAvailableBooks();
+                    currentUser.handleMenuOption1(perpustakaan, scanner);
                     break;
                 case "2":
-                    handleDisplayAllBooks();
+                    currentUser.handleMenuOption2(perpustakaan, scanner);
                     break;
                 case "3":
-                    handleBorrowBook();
+                    currentUser.handleMenuOption3(perpustakaan, scanner);
                     break;
                 case "4":
-                    handleReturnBook();
+                    perpustakaan.findBookByTitle(scanner);
                     break;
                 case "5":
-                    handleViewStatistics();
+                    if (currentUser.getUserRole() == UserRole.MEMBER) {
+                        running = handleExit();
+                        break;
+                    } else {
+                        handleViewStatistics();
+                    }
                     break;
                 case "6":
-                    running = handleExit();
-                    break;
+                    if (currentUser.getUserRole() == UserRole.ADMIN) {
+                        running = handleExit();
+                        break;
+                    }
                 default:
-                    System.out.println("❌ Pilihan tidak valid! Silakan pilih 1-6.");
+                    System.out.println("❌ Pilihan tidak valid! Silakan pilih 1-" + totalOptions + ".");
             }
             
             if (running) {
@@ -113,25 +165,6 @@ public class Main {
     }
     
     /**
-     * Menampilkan menu utama sistem
-     */
-    private static void displayMainMenu() {
-        System.out.println("╔════════════════════════════════════════════════════╗");
-        System.out.println("║            SISTEM PENGELOLAAN DATA BUKU           ║");
-        System.out.println("║                    MENU UTAMA                     ║");
-        System.out.println("╠════════════════════════════════════════════════════╣");
-        System.out.println("║ User: " + String.format("%-20s", currentUserName) + " ID: " + String.format("%-10s", currentUserId) + " ║");
-        System.out.println("╠════════════════════════════════════════════════════╣");
-        System.out.println("║ 1. Lihat Buku Tersedia                            ║");
-        System.out.println("║ 2. Lihat Semua Buku                               ║");
-        System.out.println("║ 3. Pinjam Buku                                    ║");
-        System.out.println("║ 4. Kembalikan Buku                                ║");
-        System.out.println("║ 5. Lihat Statistik Perpustakaan                   ║");
-        System.out.println("║ 6. Keluar                                          ║");
-        System.out.println("╚════════════════════════════════════════════════════╝");
-    }
-    
-    /**
      * Clear screen untuk tampilan yang bersih
      */
     private static void clearScreen() {
@@ -140,73 +173,7 @@ public class Main {
             System.out.println();
         }
     }
-    
-    /**
-     * Handle menu 1: Lihat Buku Tersedia
-     */
-    private static void handleDisplayAvailableBooks() {
-        System.out.println("=== MENU 1: LIHAT BUKU TERSEDIA ===");
-        perpustakaan.displayAvailableBooks();
-    }
-    
-    /**
-     * Handle menu 2: Lihat Semua Buku
-     */
-    private static void handleDisplayAllBooks() {
-        System.out.println("=== MENU 2: LIHAT SEMUA BUKU ===");
-        perpustakaan.displayAllBooks();
-    }
-    
-    /**
-     * Handle menu 3: Pinjam Buku
-     */
-    private static void handleBorrowBook() {
-        System.out.println("=== MENU 3: PINJAM BUKU ===");
-        
-        // Tampilkan buku yang tersedia terlebih dahulu
-        perpustakaan.displayAvailableBooks();
-        
-        System.out.print("\nMasukkan judul buku yang ingin dipinjam: ");
-        String title = scanner.nextLine().trim();
-        
-        if (title.isEmpty()) {
-            System.out.println("❌ Judul buku tidak boleh kosong!");
-            return;
-        }
-        
-        boolean success = perpustakaan.borrowBook(title, currentUserId);
-        if (success) {
-            System.out.println("  Selamat! Anda berhasil meminjam buku.");
-        } else {
-            System.out.println("  Maaf, peminjaman buku gagal.");
-        }
-    }
-    
-    /**
-     * Handle menu 4: Kembalikan Buku
-     */
-    private static void handleReturnBook() {
-        System.out.println("=== MENU 4: KEMBALIKAN BUKU ===");
-        
-        // Tampilkan semua buku untuk referensi
-        perpustakaan.displayAllBooks();
-        
-        System.out.print("\nMasukkan judul buku yang ingin dikembalikan: ");
-        String title = scanner.nextLine().trim();
-        
-        if (title.isEmpty()) {
-            System.out.println("❌ Judul buku tidak boleh kosong!");
-            return;
-        }
-        
-        boolean success = perpustakaan.returnBook(title, currentUserId);
-        if (success) {
-            System.out.println("  Terima kasih! Buku berhasil dikembalikan.");
-        } else {
-            System.out.println("  Maaf, pengembalian buku gagal.");
-        }
-    }
-    
+
     /**
      * Handle menu 5: Lihat Statistik
      */
