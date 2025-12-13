@@ -1,6 +1,8 @@
+package restaurant_system;
+
 import java.util.Scanner;
 
-public class Main {
+public class MainTaskRestaurant {
   private static Scanner scanner;
   private static Restaurant restaurant;
 

@@ -1,3 +1,5 @@
+package restaurant_system;
+
 public class Customer {
   private String name;
 

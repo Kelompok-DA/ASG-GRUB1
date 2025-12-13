@@ -1,5 +1,7 @@
+package library_system;
+
 /**
- * Kelas Book merepresentasikan buku dalam perpustakaan
+ * Kelas library_system.Book merepresentasikan buku dalam perpustakaan
  * Mendemonstrasikan enkapsulasi dengan field private dan metode public
  */
 class Book {
@@ -23,7 +25,7 @@ class Book {
     // Konstruktor dengan ID buku
     public Book(String bookId, String title, String author) {
         if (bookId == null || title == null || author == null) {
-            throw new IllegalArgumentException("Book data cannot be null");
+            throw new IllegalArgumentException("library_system.Book data cannot be null");
         }
         this.bookId = bookId;
         this.title = title;

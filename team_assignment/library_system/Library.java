@@ -1,7 +1,9 @@
+package library_system;
+
 import java.util.Scanner;
 
 /**
- * Kelas Library untuk pengelolaan data buku dengan array
+ * Kelas library_system.Library untuk pengelolaan data buku dengan array
  * Task 3: Pengelolaan Data Buku (Bobot 30%)
  * 
  * Fitur:

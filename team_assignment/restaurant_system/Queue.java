@@ -1,3 +1,5 @@
+package restaurant_system;
+
 public class Queue<T> {
   private SingleLinkedList<T> head = null;
   private SingleLinkedList<T> tail = null;

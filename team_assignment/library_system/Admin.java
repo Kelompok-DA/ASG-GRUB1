@@ -1,7 +1,9 @@
+package library_system;
+
 import java.util.Scanner;
 
 /**
- * Kelas Admin - kelas turunan dari User
+ * Kelas library_system.Admin - kelas turunan dari library_system.User
  * Mendemonstrasikan inheritance dan polimorfisme
  */
 class Admin extends User {
@@ -19,7 +21,7 @@ class Admin extends User {
         System.out.println("║            SISTEM PENGELOLAAN DATA BUKU            ║");
         System.out.println("║                  MENU ADMIN                        ║");
         System.out.println("╠════════════════════════════════════════════════════╣");
-        System.out.println("║ User: " + String.format("%-20s", getName()) + " Role: " + String.format("%-12s", getUserType()) + " ║");
+        System.out.println("║ library_system.User: " + String.format("%-20s", getName()) + " Role: " + String.format("%-12s", getUserType()) + " ║");
         System.out.println("╠════════════════════════════════════════════════════╣");
         System.out.println("║ 1. Lihat Semua Buku                                ║");
         System.out.println("║ 2. Tambah Buku                                     ║");
@@ -40,7 +42,7 @@ class Admin extends User {
 
     
     public void viewAllBooks(Library library) {
-        System.out.println("Admin " + name + " melihat semua buku di perpustakaan:");
+        System.out.println("library_system.Admin " + name + " melihat semua buku di perpustakaan:");
         library.displayAllBooks();
     }
 

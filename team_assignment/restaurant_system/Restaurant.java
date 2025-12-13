@@ -1,3 +1,5 @@
+package restaurant_system;
+
 public class Restaurant {
   private Queue<Customer> queue = new Queue<Customer>();
 

@@ -1,7 +1,9 @@
+package library_system;
+
 import java.util.Scanner;
 
 /**
- * Kelas Member - kelas turunan dari User
+ * Kelas library_system.Member - kelas turunan dari library_system.User
  * Mendemonstrasikan inheritance dan polimorfisme
  */
 class Member extends User {
@@ -16,7 +18,7 @@ class Member extends User {
         System.out.println("║            SISTEM PENGELOLAAN DATA BUKU            ║");
         System.out.println("║                 MENU MEMBER                        ║");
         System.out.println("╠════════════════════════════════════════════════════╣");
-        System.out.println("║ User: " + String.format("%-20s", name) + " Role: " + String.format("%-12s", getUserType()) + " ║");
+        System.out.println("║ library_system.User: " + String.format("%-20s", name) + " Role: " + String.format("%-12s", getUserType()) + " ║");
         System.out.println("╠════════════════════════════════════════════════════╣");
         System.out.println("║ 1. Lihat Buku Tersedia                             ║");
         System.out.println("║ 2. Pinjam Buku                                     ║");
@@ -77,7 +79,7 @@ class Member extends User {
     }
     
     public void viewAvailableBooks(Library library) {
-        System.out.println("Member " + name + " melihat buku yang tersedia:");
+        System.out.println("library_system.Member " + name + " melihat buku yang tersedia:");
         library.displayAvailableBooks();
     }
 

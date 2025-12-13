@@ -1,4 +1,5 @@
-import java.util.Objects;
+package library_system;
+
 import java.util.Scanner;
 
 /**
@@ -30,7 +31,7 @@ public class Main {
         // Login user
         loginUser();
         
-        // Main menu loop - sistem berjalan terus menerus
+        // library_system.Main menu loop - sistem berjalan terus menerus
         runMainMenuLoop();
     }
     
@@ -78,24 +79,24 @@ public class Main {
     }
 
     /**
-     * Memilih peran user: Admin atau Member
+     * Memilih peran user: library_system.Admin atau library_system.Member
      */
     private static UserRole selectRole() {
         System.out.println("Pilih peran Anda:");
-        System.out.println("1. Admin");
-        System.out.println("2. Member");
+        System.out.println("1. library_system.Admin");
+        System.out.println("2. library_system.Member");
         System.out.print("Masukkan pilihan (1-2): ");
         String choice = scanner.nextLine().trim();
 
         switch (choice) {
             case "1":
-                System.out.println("Anda login sebagai Admin...\n");
+                System.out.println("Anda login sebagai library_system.Admin...\n");
                 return UserRole.ADMIN;
             case "2":
-                System.out.println("Anda login sebagai Member...\n");
+                System.out.println("Anda login sebagai library_system.Member...\n");
                 return UserRole.MEMBER;
             default:
-                System.out.println("Pilihan tidak valid. Menggunakan peran Member sebagai default.\n");
+                System.out.println("Pilihan tidak valid. Menggunakan peran library_system.Member sebagai default.\n");
                 return UserRole.MEMBER;
         }
     }
@@ -196,7 +197,7 @@ public class Main {
         if (confirm.equals("y") || confirm.equals("yes")) {
             System.out.println("\n" + "=".repeat(55));
             System.out.println("Terima kasih telah menggunakan Sistem Pengelolaan Buku!");
-            System.out.println("User: " + currentUserName + " (ID: " + currentUserId + ")");
+            System.out.println("library_system.User: " + currentUserName + " (ID: " + currentUserId + ")");
             System.out.println("Sampai jumpa lagi! 👋");
             System.out.println("=".repeat(55));
             

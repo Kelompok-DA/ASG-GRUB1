@@ -1,8 +1,10 @@
+package library_system;
+
 import java.util.Scanner;
 
 /**
- * Kelas induk abstrak yang merepresentasikan User dalam sistem perpustakaan
- * Mendemonstrasikan inheritance - berfungsi sebagai base class untuk Admin dan Member
+ * Kelas induk abstrak yang merepresentasikan library_system.User dalam sistem perpustakaan
+ * Mendemonstrasikan inheritance - berfungsi sebagai base class untuk library_system.Admin dan library_system.Member
  */
 abstract class User {
     protected String userId;
@@ -12,7 +14,7 @@ abstract class User {
     // Konstruktor dengan validasi
     public User(String userId, String name, String userType) {
         if (userId == null || name == null || userType == null) {
-            throw new IllegalArgumentException("User data cannot be null");
+            throw new IllegalArgumentException("library_system.User data cannot be null");
         }
         this.userId = userId;
         this.name = name;

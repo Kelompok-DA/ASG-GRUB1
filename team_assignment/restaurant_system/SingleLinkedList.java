@@ -1,3 +1,5 @@
+package restaurant_system;
+
 public class SingleLinkedList<T> {
   public T val;
   public SingleLinkedList<T> next;
