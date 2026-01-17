@@ -9,7 +9,7 @@ public class StudentLinkedList {
         String id = sc.nextLine().trim();
         if (id.isEmpty()) return;
 
-        // Cek duplikasi NIM
+        // Check NIM duplication
         for (StudentNode node : students) {
             if (node.getId().equalsIgnoreCase(id)) return;
         }
@@ -21,7 +21,7 @@ public class StudentLinkedList {
         System.out.print("Masukkan nilai (0-100): ");
         int score = InputUtil.readInt(sc);
 
-        // Tambah node ke LinkedList
+        // Add node to the LinkedList
         students.addLast(new StudentNode(id, name, score));
         System.out.println("Data ditambahkan.");
     }
@@ -36,7 +36,7 @@ public class StudentLinkedList {
         String id = sc.nextLine().trim();
         if (id.isEmpty()) return;
 
-        // Iterasi node satu per satu
+        // Iterate the node one-by-one
         var it = students.iterator();
         while (it.hasNext()) {
             StudentNode node = it.next();
@@ -60,7 +60,7 @@ public class StudentLinkedList {
         String id = sc.nextLine().trim();
         if (id.isEmpty()) return;
 
-        // Cari node lalu update
+        // Find the node then update
         for (StudentNode node : students) {
             if (node.getId().equalsIgnoreCase(id)) {
                 System.out.print("Masukkan nilai baru (0-100): ");
@@ -87,7 +87,7 @@ public class StudentLinkedList {
 
         System.out.println(header);
         int index = 1;
-        // Tampilkan isi LinkedList
+        // Print the LinkedList elements
         for (StudentNode node : students) {
             System.out.println(index + ". NIM: " + node.getId()
                     + ", Nama: " + node.getName()
