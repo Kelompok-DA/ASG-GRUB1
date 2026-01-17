@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class InputUtil {
-    // Helper agar input angka aman
+    // Helper for safe numeric input
     public static int readInt(Scanner sc) {
         while (true) {
             String line = sc.nextLine().trim();
