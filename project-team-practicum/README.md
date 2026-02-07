@@ -1,4 +1,4 @@
-# 📚 Sistem Data Mahasiswa - Hash Table & Graph
+# 📚 Sistem Data Mahasiswa - Hash Table, Graph & BST
 
 ## 👨‍💻 Deskripsi Project
 
