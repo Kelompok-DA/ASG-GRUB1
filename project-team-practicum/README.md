@@ -9,10 +9,11 @@ Project ini dibuat untuk memenuhi tugas praktikum struktur data dengan tujuan me
 - Object-Oriented Programming (OOP)
 - Hash Table
 - Graph
+- Binary Search Tree (BST)
 - Analisis kompleksitas algoritma
 - Manajemen data secara efisien
 
-Hash Table dipilih karena memiliki performa sangat cepat dalam proses pencarian dan penyimpanan data. Graph digunakan untuk memodelkan relasi antar mahasiswa.
+Hash Table dipilih karena memiliki performa sangat cepat dalam proses pencarian dan penyimpanan data. Graph digunakan untuk memodelkan relasi antar mahasiswa. Sedangkan Binary Search Tree digunakan untuk menampilkan ranking mahasiswa berdasarkan IPK
 
 ---
 
@@ -42,6 +43,10 @@ Digunakan untuk menyimpan data mahasiswa dengan **NIM sebagai key**.
 Digunakan untuk menyimpan relasi antar mahasiswa berdasarkan NIM.
 
 Contoh use case: memodelkan hubungan kolaborasi (pernah satu tim proyek) agar bisa melihat koneksi antar mahasiswa.
+
+### ✅ Binary Search Tree (BST)
+
+Digunakan untuk menampilkan rangking mahasiswa berdasarkan IPK, apabila terdapat 2 mahasiswa yang memiliki IPK sama, maka akan diurutkan berdasarkan NIM.
 
 **Alasan penggunaan:**
 
@@ -105,6 +110,10 @@ Menghapus relasi antar mahasiswa menggunakan graph.
 
 Menampilkan seluruh relasi mahasiswa.
 
+#### 7. Tampilkan Ranking IPK
+
+Menampilkan ranking berdasarkan IPK dari tertinggi ke terdendah
+
 ---
 
 ## 🏗️ Struktur Project
@@ -115,6 +124,8 @@ SistemDataMahasiswa/
 ├── Mahasiswa.java
 ├── StudentGraph.java
 ├── StudentHashTable.java
+├── StudentBST.java
+├── NodeMahasiswa.java
 └── Main.java
 ```
 
@@ -128,6 +139,18 @@ Mengelola relasi mahasiswa menggunakan adjacency list.
 
 ✅ `StudentHashTable.java`  
 Mengelola operasi Hash Table seperti insert, search, dan delete.
+
+✅ `StudentBST.java`  
+Mengelola struktur Binary Search Tree untuk mengurutkan mahasiswa berdasarkan IPK.
+Data mahasiswa dimasukkan ke tree dengan aturan:
+IPK lebih kecil ke kiri
+IPK lebih besar ke kanan
+Jika IPK sama, digunakan NIM sebagai pembanding tambahan
+Struktur ini memungkinkan ranking mahasiswa ditampilkan secara terurut menggunakan traversal reverse inorder, sehingga mahasiswa dengan IPK tertinggi muncul terlebih dahulu.
+
+✅ `NodeMahasiswa.java` 
+Merepresentasikan node pada Binary Search Tree yang menyimpan objek Mahasiswa.
+Setiap node memiliki referensi ke anak kiri dan kanan yang digunakan untuk membangun struktur hierarki tree berdasarkan IPK.
 
 ✅ `Main.java`  
 Menjalankan program dan menyediakan menu interaktif.
@@ -150,9 +173,33 @@ javac *.java && java Main
 | ------------------ | ----------------------------- |
 | Insert             | O(1)                          |
 | Search             | O(1)                          |
+| Delete             | O(1)                          |
 | Worst Case         | O(n) (jika terjadi collision) |
 
 Operasi graph seperti add/delete relasi rata-rata O(1) hingga O(k), tergantung jumlah koneksi pada NIM terkait.
+
+## 📊 Graph (Adjacency List)
+
+| Operasi                  | Kompleksitas                  |
+| ------------------------ | ----------------------------- |
+| Add relasi               | O(1) — append ke list         |
+| Remove relasi            | O(k) — cari dalam list        |
+| BFS Search               | O(V + E)                      |
+
+Keterangan:
+V = jumlah mahasiswa (vertex)
+E = jumlah relasi (edge)
+
+## 📊 Binary Search Tree
+
+| Operasi                  | Kompleksitas                  |
+| ------------------------ | ----------------------------- |
+| Insert                   | O(log n) rata-rata            |
+| Traversal rangking       | O(n)                          |
+| Worst case               | O(n) jika tree tidak seimbang |
+
+BST digunakan untuk mengurutkan mahasiswa berdasarkan IPK.
+Data dimasukkan mengikuti aturan binary search sehingga traversal reverse inorder menghasilkan ranking dari IPK tertinggi ke terendah tanpa proses sorting tambahan.
 
 ---
 
@@ -162,6 +209,8 @@ Operasi graph seperti add/delete relasi rata-rata O(1) hingga O(k), tergantung j
 - Relasi mahasiswa mudah dikelola lewat graph
 - Struktur kode modular
 - Mudah dikembangkan
+- Ranking IPK dapat ditampilkan otomatis melalui BST traversal
+- Menggabungkan beberapa struktur data untuk kebutuhan berbeda
 
 ---
 
@@ -171,9 +220,10 @@ Operasi graph seperti add/delete relasi rata-rata O(1) hingga O(k), tergantung j
 - Bergantung pada hashing
 - Collision dapat menurunkan performa
 - Relasi graph bisa ramai jika banyak koneksi
+- BST dapat menjadi tidak seimbang sehingga performa menurun
 
 ---
 
 ## 📌 Kesimpulan
 
-Implementasi Hash Table pada Sistem Data Mahasiswa terbukti efektif untuk meningkatkan kecepatan pencarian dan pengelolaan data. Dengan kompleksitas rata-rata O(1), struktur data ini sangat cocok digunakan dalam aplikasi yang membutuhkan akses data secara cepat.
+Implementasi Hash Table pada Sistem Data Mahasiswa terbukti efektif untuk meningkatkan kecepatan pencarian dan pengelolaan data. Dengan kompleksitas rata-rata O(1), struktur data ini sangat cocok digunakan dalam aplikasi yang membutuhkan akses data secara cepat. Sedangkan Graph memodelkan hubungan antar mahasiswa, dan BST memungkinkan penyusunan ranking berdasarkan IPK secara efisien. Integrasi ketiganya menghasilkan sistem yang lebih fleksibel dibanding penggunaan satu struktur data saja.
