@@ -5,6 +5,7 @@ public class Main {
     Scanner input = new Scanner(System.in);
     StudentHashTable data = new StudentHashTable();
     StudentGraph graph = new StudentGraph();
+    StudentBST bst = new StudentBST();
 
     while (true) {
       System.out.println("\n=== Sistem Data Mahasiswa ===");
@@ -14,7 +15,8 @@ public class Main {
       System.out.println("4. Tambah Relasi Mahasiswa");
       System.out.println("5. Hapus Relasi Mahasiswa");
       System.out.println("6. Tampilkan Graph");
-      System.out.println("7. Keluar");
+      System.out.println("7. Tampilkan Ranking IPK");
+      System.out.println("8. Keluar");
       System.out.print("Pilih menu: ");
 
       int pilih = input.nextInt();
@@ -22,7 +24,7 @@ public class Main {
 
       switch (pilih) {
         case 1:
-          while (true) {
+          while (true) { // loop to add multiple students
             System.out.print("Masukkan NIM (atau tekan Enter untuk batal): ");
             String nim = input.nextLine();
             if (nim.trim().isEmpty()) {
@@ -39,13 +41,16 @@ public class Main {
 
             if (data.insert(nim, nama, ipk)) {
               graph.addStudent(nim);
-              System.out.println("Mahasiswa berhasil ditambahkan!");
+              // grab object from hashtable and push to BST
+              Mahasiswa m = data.get(nim);
+              bst.insert(m); // insert into BST for ranking
+              System.out.println("Mahasiswa berhasil ditambahkan.");
             } else {
               System.out.println("NIM sudah terdaftar.");
             }
 
             System.out.print("Tambah lagi? (y/n): ");
-            String lagi = input.nextLine();
+            String lagi = input.nextLine(); // consume choice
             if (!lagi.equalsIgnoreCase("y"))
               break;
           }
@@ -105,6 +110,11 @@ public class Main {
           break;
 
         case 7:
+          System.out.println("\n=== Ranking Mahasiswa (IPK Tinggi → Rendah) ===");
+          bst.displayRanking();
+          break;
+
+        case 8:
           System.out.println("Program selesai.");
           return;
 
