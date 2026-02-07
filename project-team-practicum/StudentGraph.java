@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Set;
 
 public class StudentGraph {
@@ -16,8 +17,33 @@ public class StudentGraph {
   }
 
   public boolean searchStudent(String nim) {
-    // Fast existence check keeps graph operations lightweight.
-    return adjList.containsKey(nim);
+    // BFS checks reachability by exploring neighbors level by level.
+    if (adjList.isEmpty()) {
+      return false;
+    }
+
+    HashMap<String, Boolean> visited = new HashMap<>();
+    Queue<String> queue = new LinkedList<>();
+
+    String start = adjList.keySet().iterator().next();
+    queue.add(start);
+    visited.put(start, true);
+
+    while (!queue.isEmpty()) {
+      String current = queue.poll();
+      if (current.equals(nim)) {
+        return true;
+      }
+
+      for (String neighbor : adjList.get(current)) {
+        if (!visited.containsKey(neighbor)) {
+          visited.put(neighbor, true);
+          queue.add(neighbor);
+        }
+      }
+    }
+
+    return false;
   }
 
   public boolean addRelation(String nim1, String nim2) {
